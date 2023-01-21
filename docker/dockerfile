@@ -1,0 +1,16 @@
+ARG PORT=80
+FROM python:3.10
+
+WORKDIR /test_app
+
+COPY /requirements.txt /test_app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /test_app/requirements.txt
+
+COPY /app /test_app/app
+
+EXPOSE ${PORT}
+
+VOLUME ["/docker/volumes"]
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
